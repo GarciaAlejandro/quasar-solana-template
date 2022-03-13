@@ -1,5 +1,9 @@
 <template lang="pug">
-q-page.flex.flex-center
+q-page
+  .row
+    .col-12
+      TransactionQR(:amount="amount")
+      TransactionBrowser(:amount="amount")
   .row.q-col-gutter-md
     .col-6
       WalletMultiButton
@@ -39,9 +43,22 @@ import {
   PublicKey,
   Transaction,
 } from "@solana/web3.js";
+import TransactionQR from "../components/transactionQR.vue";
+import TransactionBrowser from "../components/transactionBrowser.vue";
+// import { encodeURL, createQR } from "@solana/pay";
+// import BigNumber from "bignumber.js";
 export default defineComponent({
   name: "PageIndex",
-  components: { WalletMultiButton },
+  components: {
+    WalletMultiButton,
+    TransactionQR,
+    TransactionBrowser,
+  },
+  data() {
+    return {
+      amount: "0.0001",
+    };
+  },
   beforeMount() {
     initWallet(walletOptions);
   },
@@ -63,12 +80,12 @@ export default defineComponent({
         SystemProgram.transfer({
           fromPubkey: publicKey.value,
           toPubkey: new PublicKey(
-            "GyoixxRkQ99CfV6twBah68AfxCisYhwyVuUxek8VsNFy"
+            "9x5KYRHnPySWBi83QMBh1Ueg5dkuJfiyCbDqUPMTbVzT"
           ),
           programId: new PublicKey(
             "G4a37Uh2bxak2teBAox3zbjQWT2Nr6xgD9jkj7Sgpm16"
           ),
-          lamports: 1,
+          lamports: 1000000000,
         })
       );
       try {

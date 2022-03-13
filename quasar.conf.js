@@ -9,7 +9,7 @@
 /* eslint-env node */
 const ESLintPlugin = require("eslint-webpack-plugin");
 const { configure } = require("quasar/wrappers");
-
+require("dotenv").config();
 module.exports = configure(function (ctx) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
@@ -42,8 +42,13 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
-      vueRouterMode: "hash", // available values: 'hash', 'history'
-
+      vueRouterMode: "history", // available values: 'hash', 'history'
+      env: {
+        env: {
+          MERCHANT_WALLET_ADDRESS: process.env.MERCHANT_WALLET_ADDRESS,
+        },
+      },
+      scopeHoisting: true,
       // transpile: false,
       // publicPath: '/',
 
