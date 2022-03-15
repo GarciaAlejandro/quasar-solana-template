@@ -5,6 +5,11 @@ h6 QR code styling for Vue
     q-input(v-model="amount" debounce="500" placeholder="Amount" outlined)
   .col-12
     div reference : {{url.reference}}
+h7(style="color:red") Warning: This QR will send SOL to another wallet. Is recommended send small amounts to test. [0.00001 SOL]
+.text-caption Open the console log. You can see the transaction details.
+.text-caption Modify the amount to send, this will trigger the QR code to update.
+.text-caption Then scan the QR code with Mobile Wallet and sign trx.
+.text-caption After acept the transaction, you will see the notification in the browser.
     div(id='qr-code' ref='qrCode')
 
 </template>
@@ -50,7 +55,8 @@ export default {
       height: 300,
       type: "svg",
       data: undefined,
-      image: "/favicon.ico",
+      image:
+        "https://www.stanislavvalasek.com/post/migrating-from-vuetify-to-quasar/quasar_featured.png",
       margin: 5,
       qrOptions: {
         typeNumber: 0,
@@ -75,7 +81,7 @@ export default {
         type: "extra-rounded",
       },
       cornersDotOptions: {
-        color: "#00FFA4",
+        color: "#35495E",
         type: "dot",
       },
     };
@@ -115,7 +121,7 @@ export default {
       this.url.full = this.options.data;
       if (state === "create") {
         this.qrCode = new QRCodeStyling(this.options);
-        this.qrCode.append(this.$refs.qrCode);
+        this.qrCode.append(this.$refs["qrCode"]);
       } else {
         this.qrCode.update(this.options);
       }

@@ -1,14 +1,15 @@
 <template lang="pug">
 q-page
-  .row
-    .col-12
-      TransactionQR(:amount="amount")
-      TransactionBrowser(:amount="amount")
-  .row.q-col-gutter-md
-    .col-6
-      WalletMultiButton
-    .col-6
-      q-btn(@click="sendRandom" color="primary" label="send ramdon lamport")
+  .row.justify-between.q-pa-md
+    .row
+      .col-5
+        TransactionQR(:amount="amount")
+      .col-3
+        TransactionBrowser(:amount="amount")
+      .col-2
+        WalletMultiButton
+      .col-2
+        q-btn(@click="sendRandom" color="primary" label="send ramdon lamport")
 </template>
 
 <script>
