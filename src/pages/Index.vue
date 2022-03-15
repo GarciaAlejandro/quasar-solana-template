@@ -3,7 +3,7 @@ q-page
   .row
     .col-12
       TransactionQR(:amount="amount")
-      //- TransactionBrowser(:amount="amount")
+      TransactionBrowser(:amount="amount")
   .row.q-col-gutter-md
     .col-6
       WalletMultiButton
