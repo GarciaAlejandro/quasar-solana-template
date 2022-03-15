@@ -3,7 +3,7 @@ q-page
   .row
     .col-12
       TransactionQR(:amount="amount")
-      TransactionBrowser(:amount="amount")
+      //- TransactionBrowser(:amount="amount")
   .row.q-col-gutter-md
     .col-6
       WalletMultiButton
@@ -15,8 +15,6 @@ q-page
 import { defineComponent } from "vue";
 import { WalletMultiButton } from "solana-wallets-vue";
 import SolanaWallets from "solana-wallets-vue";
-
-// You can either import the default styles or create your own.
 import "solana-wallets-vue/styles.css";
 import { initWallet } from "solana-wallets-vue";
 import {
@@ -24,7 +22,6 @@ import {
   SlopeWalletAdapter,
   SolflareWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
-
 const walletOptions = {
   wallets: [
     new PhantomWalletAdapter(),
@@ -33,7 +30,6 @@ const walletOptions = {
   ],
   autoConnect: false,
 };
-
 import { useWallet } from "solana-wallets-vue";
 import {
   Connection,
@@ -45,8 +41,6 @@ import {
 } from "@solana/web3.js";
 import TransactionQR from "../components/transactionQR.vue";
 import TransactionBrowser from "../components/transactionBrowser.vue";
-// import { encodeURL, createQR } from "@solana/pay";
-// import BigNumber from "bignumber.js";
 export default defineComponent({
   name: "PageIndex",
   components: {
@@ -56,7 +50,7 @@ export default defineComponent({
   },
   data() {
     return {
-      amount: "0.0001",
+      amount: "0.00000",
     };
   },
   beforeMount() {
@@ -65,23 +59,13 @@ export default defineComponent({
   methods: {
     async sendRandom() {
       const connection = new Connection(clusterApiUrl("devnet"));
-      console.log(connection);
       const { publicKey, sendTransaction } = useWallet();
       if (!publicKey.value) return;
-      // s = "GyoixxRkQ99CfV6twBah68AfxCisYhwyVuUxek8VsNFy";
-      // var result = [];
-      // for (var i = 0; i < s.length; i += 2) {
-      //   result.push(parseInt(s.substring(i, i + 2), 16));
-      // }
-      // result = Uint8Array.from(result);
-      // console.log(result);
 
       const transaction = new Transaction().add(
         SystemProgram.transfer({
           fromPubkey: publicKey.value,
-          toPubkey: new PublicKey(
-            "9x5KYRHnPySWBi83QMBh1Ueg5dkuJfiyCbDqUPMTbVzT"
-          ),
+          toPubkey: new PublicKey(process.env.STORE_ADDRESS_SOLANA.toString()),
           programId: new PublicKey(
             "G4a37Uh2bxak2teBAox3zbjQWT2Nr6xgD9jkj7Sgpm16"
           ),

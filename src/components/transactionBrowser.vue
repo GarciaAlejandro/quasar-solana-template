@@ -74,9 +74,7 @@ export default {
   },
   methods: {
     getURL() {
-      this.url.recipient = new PublicKey(
-        "9x5KYRHnPySWBi83QMBh1Ueg5dkuJfiyCbDqUPMTbVzT"
-      );
+      this.url.recipient = new PublicKey(process.env.STORE_ADDRESS_SOLANA);
       this.url.amount = new BigNumber(this.amount);
       this.url.reference = new Keypair().publicKey;
       this.url.label = "Quasar vue store";

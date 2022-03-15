@@ -21,6 +21,7 @@ import {
   encodeURL,
   findTransactionSignature,
   LAMPORTS_PER_SOL,
+  FindTransactionSignatureError,
   validateTransactionSignature,
 } from "@solana/pay";
 import BigNumber from "bignumber.js";
@@ -83,7 +84,7 @@ export default {
       options,
       extension: "svg",
       qrCode: undefined,
-      connection: new Connection(clusterApiUrl("devnet"), "confirmed"),
+      connection: new Connection(clusterApiUrl("mainnet-beta"), "confirmed"),
       signature: undefined,
       url: {
         recipient: undefined,
@@ -121,24 +122,20 @@ export default {
     },
     getURL() {
       console.log("2. 🛍 Simulate a customer checkout \n");
-      this.url.recipient = new PublicKey(
-        "9x5KYRHnPySWBi83QMBh1Ueg5dkuJfiyCbDqUPMTbVzT"
-      );
+      this.url.recipient = new PublicKey(process.env.STORE_ADDRESS_SOLANA);
       this.url.amount = new BigNumber(this.amount);
       this.url.reference = new Keypair().publicKey;
       this.url.label = "Quasar vue store";
-      this.url.message = "Jungle Cats store - your order - #001234";
-      this.url.memo = "JC#4098";
+      this.url.message = "AG store - first order";
+      this.url.memo = "AGC#12#FistTRX";
       console.log("🛍 URL: ", this.url);
-      const splToken = new PublicKey(
-        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-      );
+      const splToken = new PublicKey(process.env.SPL_TOKEN_ADDRESS_USDC);
 
       return encodeURL({
         recipient: this.url.recipient,
         amount: this.url.amount,
         reference: this.url.reference,
-        splToken: splToken,
+        // splToken: splToken,
         label: this.url.label,
         message: this.url.message,
         memo: this.url.memo,
@@ -186,17 +183,13 @@ export default {
               reject(error);
             }
           }
-        }, 250);
+        }, 1250);
       });
       // Update payment status
       paymentStatus = "confirmed";
     },
     async validateTrxQR() {
       console.log("\n6. 🔗 Validate transaction \n");
-      // const amountInLamports = this.amount
-      //   .times(LAMPORTS_PER_SOL)
-      //   .integerValue(BigNumber.ROUND_FLOOR);
-
       try {
         await validateTransactionSignature(
           this.connection,
@@ -208,7 +201,7 @@ export default {
         );
 
         // Update payment status
-        paymentStatus = "validated";
+        let paymentStatus = "validated";
         console.log("✅ Payment validated");
         console.log("📦 Ship order to customer");
         this.$q.notify({
