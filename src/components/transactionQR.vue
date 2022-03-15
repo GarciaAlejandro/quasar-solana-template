@@ -55,8 +55,6 @@ export default {
       height: 300,
       type: "svg",
       data: undefined,
-      image:
-        "https://www.stanislavvalasek.com/post/migrating-from-vuetify-to-quasar/quasar_featured.png",
       margin: 5,
       qrOptions: {
         typeNumber: 0,
