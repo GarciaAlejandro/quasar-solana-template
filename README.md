@@ -3,6 +3,7 @@
 - [x] Added Solana Pay 
 - [x] Added Solana Wallet support [Phantom]
 - [x] Components to use 
+- [x] The Receiver address can be modify using the .env file 
 ## Solana Pay
 **Disclaimer: Be careful with the amount that sends to the wallet. 
 Wallet Mobile support. Execute the TRX at your own risk. The user can send a small amount to check the flow 0.0001 SOL is allowed**
@@ -16,7 +17,7 @@ Wallet Mobile support. Execute the TRX at your own risk. The user can send a sma
 3. Quasar Notification will be appear
 
 ## Coming soon
-- [ ] Modify the wallets (sender & receiver)
+- [x] Solana Pay Button
 
 A Quasar Framework app
 
