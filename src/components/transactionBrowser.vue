@@ -1,11 +1,11 @@
 <template lang="pug">
-h6 Using Browser wallet
-.row(style='width: 35%')
-  .col-12
-    q-input(v-model="amount" debounce="500" placeholder="Amount" outlined)
-  .col-12
-    div reference : {{url.reference}}
-    div(id='qr-code' ref='qrCode')
+h6 Using solana pay button [coming soon]
+//- .row.q-col-gutter-md.justify-between
+//-   .col-sm-4.col-xs-12
+//-     q-input(v-model="amount" rounded dense debounce="500" placeholder="Amount" outlined)
+//-   .col-sm-6.col-xs-12
+//-     div reference : {{url.reference}}
+//-     div(id='qr-code' ref='qrCode')
 
 </template>
 
