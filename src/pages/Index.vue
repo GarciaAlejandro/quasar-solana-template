@@ -1,15 +1,27 @@
 <template lang="pug">
 q-page
-  .row.justify-between.q-pa-md
-    .row
-      .col-5
-        TransactionQR(:amount="amount")
-      .col-3
-        TransactionBrowser(:amount="amount")
-      .col-2
+  .q-px-xl
+    .row.q-col-gutter-md.q-pt-md
+      .col-sm-6.col-xs-12
         WalletMultiButton
-      .col-2
-        q-btn(@click="sendRandom" color="primary" label="send ramdon lamport")
+      .col-sm-6.col-xs-12
+        .text-body2 Click on the button to send lamports to random account
+        .text-body2 [This feature is connected to devnet and is required the account connected ]
+        q-btn(
+          class="q-my-md"
+          @click="sendRandom",
+          noCaps,
+          color="primary",
+          label="send 0.01 SOL to Store Address"
+        )
+    hr
+    .row
+      .col-12
+        TransactionQR()
+    hr
+    .row.q-py-md
+      .col-12
+        TransactionBrowser(:amount="amount")
 </template>
 
 <script>
@@ -61,7 +73,13 @@ export default defineComponent({
     async sendRandom() {
       const connection = new Connection(clusterApiUrl("devnet"));
       const { publicKey, sendTransaction } = useWallet();
-      if (!publicKey.value) return;
+      if (!publicKey.value) {
+        this.$q.notify({
+          color: "red-7",
+          message: "Please connect a wallet",
+        });
+        return;
+      }
 
       const transaction = new Transaction().add(
         SystemProgram.transfer({
@@ -70,7 +88,7 @@ export default defineComponent({
           programId: new PublicKey(
             "G4a37Uh2bxak2teBAox3zbjQWT2Nr6xgD9jkj7Sgpm16"
           ),
-          lamports: 1000000000,
+          lamports: 10000000,
         })
       );
       try {
@@ -93,4 +111,9 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped></style>
+<style lang="css" scoped>
+hr {
+  border: 0;
+  border-top: 1.5px solid #eee;
+}
+</style>
